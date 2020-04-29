@@ -1,8 +1,13 @@
 package br.com.codenation;
 
-import java.util.ArrayList;
+import org.w3c.dom.stylesheets.LinkStyle;
+
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 public class StatisticUtil {
@@ -13,25 +18,14 @@ public class StatisticUtil {
     }
 
     public static int mode(int[] elements) {
-        int repetidos = elements[0];
-        int total = 0;
-        Arrays.sort(elements);
-        if (elements.length == 1) {
-            return elements[0];
-        }
-        for (int element : elements) {
-            int contador = 0;
-            for (int value : elements) {
-                if (element == value) {
-                    contador++;
-                }
-                if (contador > total) {
-                    repetidos = element;
-                    total = contador;
-                }
-            }
-        }
-        return repetidos;
+
+        return Arrays.stream(elements)
+                .boxed()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet().stream()
+                .max(Comparator.comparingLong(Map.Entry::getValue))
+                .get()
+                .getKey();
     }
 
     public static int median(int[] elements) {
