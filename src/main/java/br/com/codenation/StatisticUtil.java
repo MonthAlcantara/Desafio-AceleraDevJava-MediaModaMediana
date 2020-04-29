@@ -8,11 +8,8 @@ import java.util.List;
 public class StatisticUtil {
 
     public static int average(int[] elements) {
-        int total = 0;
-        for (int e : elements) {
-            total += e;
-        }
-        return total / elements.length;
+
+        return Arrays.stream(elements).sum() / elements.length;
     }
 
     public static int mode(int[] elements) {
@@ -22,14 +19,14 @@ public class StatisticUtil {
         if (elements.length == 1) {
             return elements[0];
         }
-        for (int x = 0; x < elements.length; x++) {
+        for (int element : elements) {
             int contador = 0;
-            for (int i = 0; i < elements.length; i++) {
-                if (elements[x] == elements[i]) {
+            for (int value : elements) {
+                if (element == value) {
                     contador++;
                 }
                 if (contador > total) {
-                    repetidos = elements[x];
+                    repetidos = element;
                     total = contador;
                 }
             }
