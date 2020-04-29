@@ -30,9 +30,11 @@ public class StatisticUtil {
 
     public static int median(int[] elements) {
         Arrays.sort(elements);
-        int mediana = elements.length / 2;
-        return (elements.length % 2 == 0)
-                ? (elements[mediana - 1] + elements[mediana]) / 2
-                : elements[mediana];
+        int mediana = elements.length % 2 == 0 ? elements.length / 2 : (elements.length / 2) + 1;
+        return Arrays.stream(elements)
+                .filter(e -> elements.length % 2 == 0)
+                .map(e -> (elements[mediana - 1] + elements[mediana]) / 2)
+                .findFirst()
+                .orElse(elements[mediana - 1]);
     }
 }
